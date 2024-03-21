@@ -1,10 +1,24 @@
 // first scene is in the dark night and a circle mask moving around to makes a effects as the lunar eclipse.
-//when you pressed the mouse the snow on the tree will drop.
+
+// i also use a moving rect to makea shadow -> the circle mask will arrive later.
+// i use the for loop random in the start also frame counter to control the star twinkletiming ans size.
+//when you press the  RIGHT_ARROW the scene will move into the next scene. and you will see cherry blossoms. -> I followed the same logic that I used in the snow logic code. I used the translation matrix scale function and also collaborated with frame counter function.
 
 
-let drawTreeleft, drawRight, stars,snzow; //declaring objects.
+// thrid scene, when you pressed the mouse, you will see a brid flying on the sky. I used the for loop to control the clouds number let it loop over the screen.And i have also use the draw loop to making it moving on the screen. I used mouseX and mouse Y to let user to control the flying bird location.
+// also I use the random function at the top of the Bird's wing to make animation effects like flapping its wing.
+
+// speed of mask. i want my circle mask to cover the moon and making a moon sclipse effect. so i use draw loop.
+
+//snzow
+let drawTreeleft, drawRight, stars,snow, cherryblossm;
+//declaring objects.
+let birdcolor;
+let showFirstSet = true; // for mouse presse
+let clouds = []; 
 
 
+let option = 1; // default to the first scene
 
 // here is the setup of the moon.
 let moonX = 400; // moonXvalue.
@@ -18,7 +32,17 @@ let moonX = 400; // moonXvalue.
    let shadowX = 0; //shadowX 
    let shadowY = 0; //shadowY
 
+
+// set up the lunareclipse 
+
+// scene 1 snow and stars and lunar eclipes
+
+   
+
+
     function setup() {
+      
+       birdcolor = color (156, 161, 186);
       createCanvas(800, 800);
       bgColor2 = color(37, 33, 71);//bgcolor
       maskColor = color(37, 33, 71);//maskcolor
@@ -30,16 +54,25 @@ let moonX = 400; // moonXvalue.
       
       stars = new  DrawStars (20,20,color(255));
       
-      snow = new  DrawSnow (150,310, color(255));
       
       
-      // i am trying to rotate this one. and tried, i cannot roatate this class.
-  //    push();
-  // translate(0, 0);
-  // rotate(radians(95));
+       cherryblossm = new  DrawFlower (150,310, color(235, 160, 190));
+      
+      // for scene2 //
+      
+      clouds.push({ x: -50, y: height / 4, speed: 2 });
+      clouds.push({ x: -150, y: height/3 , speed: 1.5 });
+       clouds.push({ x: -250, y: height / 2, speed: 1 });
+       clouds.push({ x: -250, y: 100, speed: 1 });
+      
+      
+      // for scene 2
+      
+      
+       snow = new  DrawSnow (150,310, color(255));
+
   drawRight = new DrawTree(500, 400, color(111,111,111));
-   // pop();
-    
+
       stars = []; // Initialize an array for stars
   for (let i = 0; i < 100; i++) { // Example: Create 100 stars
     let x = random(width);
@@ -47,20 +80,35 @@ let moonX = 400; // moonXvalue.
     stars.push(new DrawStars(x, y, color(255, 250, 217)));  
   } //end of this
       
-  //for snow
-   //end of snow
+
       
     }
     
 
    function draw() {
-      DrawLunareclipse();
+     background(currentColor);
+     
+  if(option === 1 ) {
+    
+   DrawLunareclipse();
+    
+  //Drawcherryblossm();
+  
+  } else if (option === 2) {
+    
+  //  DrawLunareclipse();
+    
+    Drawcherryblossm();
+  }
+   }
+     
+     
       
-    }
 
-  // scene 1 snow and stars
+  
 
-    function DrawLunareclipse() {
+
+ function DrawLunareclipse() {
       
       //setup class for OOP -> i want a yellowmoon.
  
@@ -68,11 +116,7 @@ let moonX = 400; // moonXvalue.
       currentColor = lerpColor(maskColor, bgColor2, 0.5);
       background(currentColor);
       
-      //stars
-      
-  //     for (let star of stars) {
-  //   star.display(); // call the display method for each star
-  // }
+
       
        stars.forEach(star => {
         star.updateStar(); // Update the star's properties for twinkling
@@ -105,13 +149,12 @@ let moonX = 400; // moonXvalue.
       if (movingCircleX > width + 40) {
         movingCircleX = -40;
       }
+    
+     
       
-      
-      
-    } // end of drawloop.
+    }
 
-
-
+//
     
 
 
@@ -172,54 +215,40 @@ let moonX = 400; // moonXvalue.
     
       
 
-class DrawSnow {
+ class DrawSnow {
   
  constructor (x,y,c) {
     this.x = x;
     this.y = y;
     this.c = c;
-    this.isVisible = true; 
+   
     
   }
     
   display() {
-  if (!this.isVisible) {
-    return; 
-    fill(125, 143, 120)
-    ellipse(this.x-20, this.y-5, 70, 20);
+  
     
-  }else {
-
-  push();   
-  translate(this.x - 400,this.y-60);
-  rotate(radians(-45));
-  fill(this.c)
-  ellipse(this.x, this.y, 50, 20);
-  ellipse(this.x+30, this.y-10, 40, 20);
-  ellipse(this.x-20, this.y-5, 70, 20);
-  ellipse(this.x+180, this.y+30, 60, 10);
-  ellipse(this.x-70, this.y+40, 30, 10);
     
 
-    
-  
-  pop();
-  }
+
+// drawing the main snow shape
+        push();   
+        translate(this.x - 400, this.y - 60);
+        rotate(radians(-45));
+        fill(this.c);
+        ellipse(this.x, this.y, 50, 20);
+        ellipse(this.x + 30, this.y - 10, 40, 20);
+        ellipse(this.x - 20, this.y - 5, 70, 20);
+        ellipse(this.x + 180, this.y + 30, 60, 10);
+        ellipse(this.x - 70, this.y + 40, 30, 10);
+        pop();
   
 
-//  push();
-// translate(this.x -70,this.y+160);
-//  rotate(radians(-35));
-  fill(this.c) 
-  ellipse(this.x+400, this.y+280, 40, 5);
- // pop();
-      
- }
-  
-shrink() {
-    this.scale *= 0.95; // Shrink shapes by reducing scale
-  }
-  
+
+       // this part is always executed as part of the display
+        fill(this.c); 
+        ellipse(this.x + 400, this.y + 280, 40, 5);
+    }
 }
         
         
@@ -268,10 +297,282 @@ class DrawStars {
   }
 }
 
+ function Drawcherryblossm() {
+      
 
-function mousePressed() {
+      background(200, 226, 227);
+      
+   
+      if (showFirstSet) {
+        
+        
+        
+       stars.forEach(star => {
+        star.updateStar(); // Update the star's properties for twinkling
+        star.display(); // draw the star with its current properties
+    });
+      // end of stars
+      
+
+      fill(255, 216, 138)
+      ellipse(moonX, moonY, 200, 200); // moon
+      
+     
+      
+
+      
+      drawTreeleft.display(); //call my instance of display
+      drawRight.display(); // i want draw the tree on the right
+      
+      
+ cherryblossm.display(); //call the cherryblossm
+      
+      
+ drawBrid() ;
+      
+      
+
+ 
+      
+      
+      
+    // end of drawloop.
+
+ } else {
+   
+
+   
+   
+        
+     stars.forEach(star => {
+        star.updateStar(); // for twinkling
+        star.display(); // star with its current properties
+    });
+      // end of stars
+   
+  clouds.forEach(cloud => {
+    drawCloud(cloud.x, cloud.y); // draw each cloud 
+    
+   
+    cloud.x += cloud.speed;
+    
   
-   if (snow) snow.isVisible = !snow.isVisible;
+    if (cloud.x > width + 100) { //control the cloud number.
+      cloud.x = -200; 
+      cloud.y = random(height / 4, height / 2); //randomize y position
+    }
+  });
+    drawBridflying() ;
+}
+    }
+    
+
+// class for flower 
+class DrawFlower {
+      
+  
+ constructor(x, y, c) {
+        this.x = x;
+        this.y = y;
+        this.c = c;
+        this.isVisible = true;
+        this.size = 0.2; // initial scaling factor
+        this.frameCounter = 0; // 
+        this.bloomFrame = 60; // number of frames to wait before blooming
+    }
+
+    display() {
+        this.frameCounter++; // add size
+
+        
+        if (this.frameCounter >= this.bloomFrame) {
+            this.size += 0.05; // increase size for the bloom effect
+           if ( this.size >= 1.5 ) { // reset frame counter to continuously bloom
+             // this.size >= 2;
+             this.size =2; // max of the size
+           }
+           this.frameCounter = 0;
+        }
+
+        // animation of cherry bloosm blooming-> it will blooming from small to big.
+        push(); 
+        translate(this.x, this.y); 
+        scale(this.size); 
+
+        // reset positions since we've translated to (this.x, this.y) and scaled
+        fill(this.c);
+        ellipse(0, 0, 30, 30);
+       pop();
+      
+      push();
+      translate(this.x, this.y);
+       fill(this.c);
+        scale(this.size); 
+        ellipse(30, -25, 15, 15);
+      pop();
+      
+
+        push();
+      translate(this.x, this.y);
+         fill(this.c);
+        scale(this.size); 
+        ellipse(0, 40, 15, 15);
+        pop();
+
+      
+          push();
+      translate(this.x, this.y);
+       fill(this.c);
+        scale(this.size);
+      //set this location fix .
+      let compensatedX = (-60 / this.size-2);
+        let compensatedY = (30 / this.size-2);
+        ellipse(compensatedX, compensatedY, 10, 10);
+      ellipse(compensatedX-20, compensatedY+80, 30, 30);
+      pop();
+
+      
+      push();
+      translate(this.x, this.y);
+      fill(this.c);
+       scale(this.size);
+      
+      // flower on the right
+      let compensatedX1 = (500 / this.size-2);
+      let compensatedY2 = (60 / this.size-2);
+      let compensatedX11 = (580 / this.size-1);
+      let compensatedY22 = (30 / this.size-2);
+      
+       let compensatedX111 = (590 / this.size+1);
+      
+       let compensatedY222 = (80 / this.size-2);
+      ellipse(compensatedX1, compensatedY2, 10, 10);
+      ellipse(compensatedX11, compensatedY22, 10, 10);
+      ellipse(compensatedX111, compensatedY222, 10, 10);
+      
+      
+  
+      pop();
+      
+        //
+  }
+  
+}
+
+function drawBrid() {
+  
+  push();
+  fill( birdcolor);
+  translate(150, 110);
+  scale(0.5); 
+  noStroke();
+  
+  // draw body
+
+  
+  fill( birdcolor);
+  noStroke();
+  ellipse(200, 220, 100, 100); 
+  
+  // head of the bird - a smaller circle
+  ellipse(240, 180, 50, 50); 
+  
+  // beak of the bird - a triangle
+  fill( birdcolor);
+  triangle(260, 170, 280, 180, 260, 190);
+  
+  // tail of the bird - a triangle
+  fill(birdcolor);
+  triangle(180, 200, 120, 190, 120, 230);
+  
+  // wing of the bird - using beginShape() and endShape()
+  fill(birdcolor);
+  beginShape();
+  vertex(160, 170); // Starting point at the center-top of the body
+  //wing
+  
+ // vertex(160, 120); // upper left point of the wing
+  vertex(230, 160); // outermost point of the wing
+  
+ 
+  endShape(CLOSE);
 
 }
 
+function drawBridflying() {
+  
+  push();
+  fill( birdcolor);
+  translate(mouseX, mouseY);
+  scale(1); 
+  noStroke();
+  
+  // draw body
+
+  
+  fill( birdcolor);
+  noStroke();
+  ellipse(200, 220, 100, 100); 
+  
+  // Head of the bird - a smaller circle
+  ellipse(240, 180, 50, 50); 
+  
+  // Beak of the bird - a triangle
+  fill( birdcolor);
+  triangle(260, 170, 280, 180, 260, 190);
+  
+  // Tail of the bird - a triangle
+  fill(birdcolor);
+  triangle(180, 200, 120, 190, 120, 230);
+  
+  // Wing of the bird - using beginShape() and endShape()
+  fill(birdcolor);
+  beginShape();
+  vertex(160, 170); // starting point at the center-top of the body
+  //wing
+  
+  triangle(230, 245, 158, 205, 196, random(190,100));
+  
+ 
+  endShape(CLOSE);
+
+}
+
+function drawCloud(x,y) {
+  
+   // clouds
+   fill (255);
+     ellipse(x+50,y+50,60,50);
+  ellipse(x+80,y+40,60,50);
+  ellipse(x+130,y+50,60,50);
+  ellipse(x+70,y+70,60,50);
+  ellipse(x+110,y+65,60,50);
+  
+}
+
+
+function mousePressed() {
+  
+  // if (snow) snow.isVisible = !snow.isVisible;
+  showFirstSet = !showFirstSet;
+
+}
+
+
+function keyPressed() {
+  
+
+if (keyCode === LEFT_ARROW) {
+    option++;
+    if (option < 2) {
+      option = 1;
+    }
+  } else if (keyCode === RIGHT_ARROW) {
+    option--;
+    if (option < 1) {
+      option = 2;
+    }
+  }
+  
+}
+ 
