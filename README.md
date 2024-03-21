@@ -13,4 +13,4 @@ i also use a moving rect to makea shadow -> the circle mask will arrive later.
 -> I followed the same logic that I used in the snow logic code. I used the translation matrix scale function and also collaborated with frame counter function.
 
 
-// thrid scene, when you pressed the mouse, you will see a brid flying on the sky. I used the for loop to control the clouds number let it loop over the screen.And i have also use the draw loop to making it moving on the screen. I used mouseX and mouse Y to let user to control the flying bird location.
+// thrid scene, when you pressed the mouse, you will see a bird flying on the sky. I used the for loop to control the clouds number let it loop over the screen.And i have also use the draw loop to making it moving on the screen. I used mouseX and mouse Y to let user to control the flying bird location.
