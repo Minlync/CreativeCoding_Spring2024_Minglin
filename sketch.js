@@ -1,3 +1,5 @@
+//Apr 4 updated:removed the mouse interaction and used frameCount / sceneDuration to switch scenes
+
 // first scene is in the dark night and a circle mask moving around to makes a effects as the lunar eclipse.
 
 // i also use a moving rect to makea shadow -> the circle mask will arrive later.
@@ -77,7 +79,7 @@ function setup() {
 
 function draw() {
   // calculate the current scene based on frameCount
-  let sceneDuration = 1200; // Duration of each scene in frames (60 seconds)
+  let sceneDuration = 1200; // duration of each scene in frames (60 seconds)
   let currentScene = Math.floor(frameCount / sceneDuration) % 3; //  3 scenes
 
   background(bgColor2);
