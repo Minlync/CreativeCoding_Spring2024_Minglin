@@ -10,17 +10,13 @@
 
 // speed of mask. i want my circle mask to cover the moon and making a moon sclipse effect. so i use draw loop.
 
-//snzow
+
 let drawTreeleft, drawRight, stars,snow, cherryblossm;
 //declaring objects.
 let birdcolor;
 let showFirstSet = true; // for mouse presse
 let clouds = []; 
 
-
-let option = 1; // default to the first scene
-
-// here is the setup of the moon.
 let moonX = 400; // moonXvalue.
     let moonY = 400; // the moon  Y value
     let movingCircleX = 100; //making mask move.
@@ -32,15 +28,94 @@ let moonX = 400; // moonXvalue.
    let shadowX = 0; //shadowX 
    let shadowY = 0; //shadowY
 
+function setup() {
+      
+       birdcolor = color (156, 161, 186);
+      createCanvas(800, 800);
+      bgColor2 = color(37, 33, 71);//bgcolor
+      maskColor = color(37, 33, 71);//maskcolor
+      
+      moon = 
+      currentColor = lerpColor(bgColor2, maskColor, 0.5);
+      
+      drawTreeleft = new DrawTree (0,0, color(111,111,111));
+      
+      stars = new  DrawStars (20,20,color(255));
+      
+      
+      
+       cherryblossm = new  DrawFlower (150,310, color(235, 160, 190));
+      
+      // for scene2 //
+      
+      clouds.push({ x: -50, y: height / 4, speed: 2 });
+      clouds.push({ x: -150, y: height/3 , speed: 1.5 });
+       clouds.push({ x: -250, y: height / 2, speed: 1 });
+       clouds.push({ x: -250, y: 100, speed: 1 });
+      
+      
+      // for scene 2
+      
+      
+       snow = new  DrawSnow (150,310, color(255));
 
-// set up the lunareclipse 
+  drawRight = new DrawTree(500, 400, color(111,111,111));
 
-// scene 1 snow and stars and lunar eclipes
+      stars = []; // array for stars
+  for (let i = 0; i < 100; i++) { // Example: Create 100 stars
+    let x = random(width);
+    let y = random(height);
+    stars.push(new DrawStars(x, y, color(255, 250, 217)));  
+  } //end of this
+      
 
+      
+    }
+
+
+
+
+function draw() {
+  // calculate the current scene based on frameCount
+  let sceneDuration = 1200; // Duration of each scene in frames (60 seconds)
+  let currentScene = Math.floor(frameCount / sceneDuration) % 3; //  3 scenes
+
+  background(bgColor2);
+
+  // changed the scene from time instead of mouse or key
+  switch (currentScene) {
+    case 0:
+      DrawLunareclipse();
+      break;
+    case 1:
+      Drawcherryblossm();
+      break;
+    case 2:
+            
+     stars.forEach(star => {
+        star.updateStar(); // for twinkling
+        star.display(); // star with its current properties
+    });
+      // end of stars
    
+  clouds.forEach(cloud => {
+    drawCloud(cloud.x, cloud.y); // draw each cloud 
+    
+   
+    cloud.x += cloud.speed;
+    
+  
+    if (cloud.x > width + 100) { //control the cloud number.
+      cloud.x = -200; 
+      cloud.y = random(height / 4, height / 2); //randomize y position
+    }
+  });
+    drawBridflying() ;
+      break;
+  }
+}
 
-
-    function setup() {
+function setup() {
       
        birdcolor = color (156, 161, 186);
       createCanvas(800, 800);
@@ -83,34 +158,10 @@ let moonX = 400; // moonXvalue.
 
       
     }
-    
 
-   function draw() {
-     background(currentColor);
-     
-  if(option === 1 ) {
-    
-   DrawLunareclipse();
-    
-  //Drawcherryblossm();
-  
-  } else if (option === 2) {
-    
-  //  DrawLunareclipse();
-    
-    Drawcherryblossm();
-  }
-   }
-     
-     
-      
-
-  
-
-
- function DrawLunareclipse() {
-      
-      //setup class for OOP -> i want a yellowmoon.
+// Example scene functions
+function DrawLunareclipse() {
+   //setup class for OOP -> i want a yellowmoon.
  
       // Interpolate background color
       currentColor = lerpColor(maskColor, bgColor2, 0.5);
@@ -139,13 +190,13 @@ let moonX = 400; // moonXvalue.
       
       snow.display(); //call the snow
       
-      fill(0,50) // adding shadow
-      rect(movingCircleX-200,0,600,800);//moving shadow
+      fill(0,99) // adding shadow
+      rect(movingCircleX-600,0,800,800);//moving shadow
       
       
 
-      // speed of mask. i want my circle mask to cover the moon and making a moon sclipse effect. so i use draw loop.
-      movingCircleX += 0.1;
+      // speed of mask. 
+      movingCircleX += 0.5;
       if (movingCircleX > width + 40) {
         movingCircleX = -40;
       }
@@ -154,9 +205,87 @@ let moonX = 400; // moonXvalue.
       
     }
 
-//
-    
 
+
+
+
+
+/// classs
+
+
+
+
+
+// 2
+function Drawcherryblossm() {
+      
+
+      background(200, 226, 227);
+      
+   
+      if (showFirstSet) {
+        
+        
+        
+       stars.forEach(star => {
+        star.updateStar(); // Update the star's properties for twinkling
+        star.display(); // draw the star with its current properties
+    });
+      // end of stars
+      
+
+      fill(255, 216, 138)
+      ellipse(moonX, moonY, 200, 200); // moon
+      
+     
+      
+
+      
+      drawTreeleft.display(); //call my instance of display
+      drawRight.display(); // i want draw the tree on the right
+      
+      
+ cherryblossm.display(); //call the cherryblossm
+      
+      
+ drawBrid() ;
+      
+      
+
+ 
+      
+      
+      
+    // end of drawloop.
+
+ } else {
+   
+
+   
+   
+        
+//      stars.forEach(star => {
+//         star.updateStar(); // for twinkling
+//         star.display(); // star with its current properties
+//     });
+//       // end of stars
+   
+//   clouds.forEach(cloud => {
+//     drawCloud(cloud.x, cloud.y); // draw each cloud 
+    
+   
+//     cloud.x += cloud.speed;
+    
+  
+//     if (cloud.x > width + 100) { //control the cloud number.
+//       cloud.x = -200; 
+//       cloud.y = random(height / 4, height / 2); //randomize y position
+//     }
+//   });
+//     drawBridflying() ;
+}
+    }
+    
 
 // new class - > for drawing tree
 
@@ -213,46 +342,6 @@ let moonX = 400; // moonXvalue.
     
   }
     
-      
-
- class DrawSnow {
-  
- constructor (x,y,c) {
-    this.x = x;
-    this.y = y;
-    this.c = c;
-   
-    
-  }
-    
-  display() {
-  
-    
-    
-
-
-// drawing the main snow shape
-        push();   
-        translate(this.x - 400, this.y - 60);
-        rotate(radians(-45));
-        fill(this.c);
-        ellipse(this.x, this.y, 50, 20);
-        ellipse(this.x + 30, this.y - 10, 40, 20);
-        ellipse(this.x - 20, this.y - 5, 70, 20);
-        ellipse(this.x + 180, this.y + 30, 60, 10);
-        ellipse(this.x - 70, this.y + 40, 30, 10);
-        pop();
-  
-
-
-       // this part is always executed as part of the display
-        fill(this.c); 
-        ellipse(this.x + 400, this.y + 280, 40, 5);
-    }
-}
-        
-        
-      
 
 class DrawStars {
   constructor(sx, sy, sc) {
@@ -297,13 +386,14 @@ class DrawStars {
   }
 }
 
- function Drawcherryblossm() {
+
+function Drawcherryblossm() {
       
 
-      background(200, 226, 227);
+      background(200, 226, 227);//day
       
    
-      if (showFirstSet) {
+         background(bgColor2);//night
         
         
         
@@ -330,44 +420,13 @@ class DrawStars {
       
  drawBrid() ;
       
-      
+}
 
  
       
-      
-      
-    // end of drawloop.
-
- } else {
-   
-
-   
-   
-        
-     stars.forEach(star => {
-        star.updateStar(); // for twinkling
-        star.display(); // star with its current properties
-    });
-      // end of stars
-   
-  clouds.forEach(cloud => {
-    drawCloud(cloud.x, cloud.y); // draw each cloud 
-    
-   
-    cloud.x += cloud.speed;
-    
-  
-    if (cloud.x > width + 100) { //control the cloud number.
-      cloud.x = -200; 
-      cloud.y = random(height / 4, height / 2); //randomize y position
-    }
-  });
-    drawBridflying() ;
-}
-    }
     
 
-// class for flower 
+ 
 class DrawFlower {
       
   
@@ -551,28 +610,43 @@ function drawCloud(x,y) {
 }
 
 
-function mousePressed() {
+class DrawSnow {
   
-  // if (snow) snow.isVisible = !snow.isVisible;
-  showFirstSet = !showFirstSet;
-
-}
-
-
-function keyPressed() {
-  
-
-if (keyCode === LEFT_ARROW) {
-    option++;
-    if (option < 2) {
-      option = 1;
-    }
-  } else if (keyCode === RIGHT_ARROW) {
-    option--;
-    if (option < 1) {
-      option = 2;
-    }
+ constructor (x,y,c) {
+    this.x = x;
+    this.y = y;
+    this.c = c;
+   
+    
   }
+    
+  display() {
   
+    
+    
+
+
+// drawing the main snow shape
+        push();   
+        translate(this.x - 400, this.y - 60);
+        rotate(radians(-45));
+        fill(this.c);
+        ellipse(this.x, this.y, 50, 20);
+        ellipse(this.x + 30, this.y - 10, 40, 20);
+        ellipse(this.x - 20, this.y - 5, 70, 20);
+        ellipse(this.x + 180, this.y + 30, 60, 10);
+        ellipse(this.x - 70, this.y + 40, 30, 10);
+        pop();
+  
+
+
+       // this part is always executed as part of the display
+        fill(this.c); 
+        ellipse(this.x + 400, this.y + 280, 40, 5);
+    }
 }
- 
+        
+        
+
+
+
