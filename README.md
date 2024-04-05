@@ -7,4 +7,4 @@ Midterm Project for NYU IDM Creative Coding Class
 
 // i also use a moving rect to makea shadow -> the circle mask will arrive later.
 // i use the for loop random in the start also frame counter to control the star twinkletiming ans size.
-//when you press the  RIGHT_ARROW the scene will move into the next scene. and you will see cherry blossoms. -> I followed the same logic that I used in the snow logic code. I used the translation matrix scale function and also collaborated with frame counter function.
+// waiting 60 seconds, you will see cherry blossoms. -> I followed the same logic that I used in the snow logic code. I used the translation matrix scale function and also collaborated with frame counter function.
