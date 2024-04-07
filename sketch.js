@@ -10,7 +10,7 @@
 
 
 
-
+let cherryTrees = []; //declear my object.
 
 let drawTreeleft, drawRight, stars,snow, cherryblossm;
 //declaring objects.
@@ -42,9 +42,9 @@ function setup() {
       
       stars = new  DrawStars (20,20,color(255));
       
+     //cherrytree = new Treecrown(100, 750, color(245, 203, 223)); //new added
       
-      
-       cherryblossm = new  DrawFlower (150,310, color(235, 160, 190));
+    cherryblossm = new  DrawFlower (150,310, color(235, 160, 190));
       
       // for scene2 //
       
@@ -69,6 +69,20 @@ function setup() {
   } //end of this
       
 
+  //setup for cherrytrees
+  
+  
+    
+  
+let startX = 50;
+   let spacing = 10;
+  
+  for (let i = 0; i<3; i++) {
+    let x = startX + (i * (spacing + 300));
+    let y = 650;
+    let treeColor = color(245, 203, 223);
+    cherryTrees.push(new Treecrown(x, y, treeColor));
+  }
       
     }
 
@@ -76,8 +90,8 @@ function setup() {
 
 
 function draw() {
- 
-  let sceneDuration = 800; // Duration of each scene in frames 
+
+  let sceneDuration = 800; // duration of each scene in frames.
   let currentScene = Math.floor(frameCount / sceneDuration) % 3; //  3 scenes
 
   background(bgColor2);
@@ -115,49 +129,8 @@ function draw() {
   }
 }
 
-function setup() {
-      
-       birdcolor = color (156, 161, 186);
-      createCanvas(800, 800);
-      bgColor2 = color(37, 33, 71);//bgcolor
-      maskColor = color(37, 33, 71);//maskcolor
-      
-      
-      currentColor = lerpColor(bgColor2, maskColor, 0.5);
-      
-      drawTreeleft = new DrawTree (0,0, color(111,111,111));
-      
-      stars = new  DrawStars (20,20,color(255));
-      
-      
-      
-       cherryblossm = new  DrawFlower (150,310, color(235, 160, 190));
-      
-      // for scene2 //
-      
-      clouds.push({ x: -50, y: height / 4, speed: 2 });
-      clouds.push({ x: -150, y: height/3 , speed: 1.5 });
-       clouds.push({ x: -250, y: height / 2, speed: 1 });
-       clouds.push({ x: -250, y: 100, speed: 1 });
-      
-      
-      // for scene 2
-      
-      
-       snow = new  DrawSnow (150,310, color(255));
 
-  drawRight = new DrawTree(500, 400, color(111,111,111));
 
-      stars = []; // Initialize an array for stars
-  for (let i = 0; i < 100; i++) { // Example: Create 100 stars
-    let x = random(width);
-    let y = random(height);
-    stars.push(new DrawStars(x, y, color(255, 250, 217)));  
-  } //end of this
-      
-
-      
-    }
 
 function DrawLunareclipse() {
    //setup class for OOP -> i want a yellowmoon.
@@ -209,9 +182,6 @@ function DrawLunareclipse() {
 
 
 
-/// classs
-
-
 
 
 
@@ -233,7 +203,7 @@ function Drawcherryblossm() {
       // end of stars
       
 
-      fill(255, 216, 138)
+      fill(255, 250, 214);
       ellipse(moonX, moonY, 200, 200); // moon
       
      
@@ -245,22 +215,15 @@ function Drawcherryblossm() {
       
       
  cherryblossm.display(); //call the cherryblossm
+       // cherrytree.display();
       
       
  drawBrid() ;
       
       
 
- 
-      
-      
-      
-    // end of drawloop.
+      }
 
- } else {
-   
-
-}
     }
     
 
@@ -373,7 +336,7 @@ function Drawcherryblossm() {
       // end of stars
       
 
-      fill(255, 250, 214)//moon color make its same as the first one
+      fill(255, 216, 138)//moon color make its same as the first one
       ellipse(moonX, moonY, 200, 200); // moon
       
      
@@ -527,11 +490,17 @@ function drawBrid() {
 }
 
 function drawBridflying() {
+  //cherrytree.display();
+  
+   for (let i = 0; i < cherryTrees.length; i++) {
+    cherryTrees[i].move();
+    cherryTrees[i].display();
+  }
   
   push();
   fill( birdcolor);
   translate(mouseX, mouseY);
-  scale(1); 
+  scale(-1,1);
   noStroke();
   
   // draw body
@@ -541,18 +510,18 @@ function drawBridflying() {
   noStroke();
   ellipse(200, 220, 100, 100); 
   
-  // Head of the bird - a smaller circle
+  // head of the bird - a smaller circle
   ellipse(240, 180, 50, 50); 
   
-  // Beak of the bird - a triangle
+  // beak of the bird 
   fill( birdcolor);
   triangle(260, 170, 280, 180, 260, 190);
   
-  // Tail of the bird - a triangle
+  // tail of the bird 
   fill(birdcolor);
   triangle(180, 200, 120, 190, 120, 230);
   
-  // Wing of the bird - using beginShape() and endShape()
+  // wing of the bird 
   fill(birdcolor);
   beginShape();
   vertex(160, 170); // starting point at the center-top of the body
@@ -562,7 +531,8 @@ function drawBridflying() {
   
  
   endShape(CLOSE);
-
+ 
+  
 }
 
 function drawCloud(x,y) {
@@ -620,4 +590,36 @@ class DrawSnow {
 }
 
 
+class Treecrown {
 
+  constructor(x, y, c) {
+    this.x = x;
+    this.y = y;
+    this.c = c;
+    this.speedX = 1
+  }
+  
+   move(){
+       this.x += this.speedX;
+        if (this.x < 0) {
+      this.x = width;
+    } else if (this.x > width) {
+      this.x = 0;
+    }
+   }
+
+  display() {
+    push();
+    fill(189, 164, 145);
+    noStroke();
+    rect(this.x + 75, this.y + 100, 40, 80);
+    fill(this.c); //green
+    noStroke();
+    ellipse(this.x + 30, this.y + 50, 70, 70);
+    ellipse(this.x + 80, this.y + 20, 70, 70);
+    ellipse(this.x + 130, this.y + 50, 100, 50);
+    ellipse(this.x + 70, this.y + 70, 80, 80);
+    ellipse(this.x + 110, this.y + 85, 80, 80);
+    pop();
+  }
+}
