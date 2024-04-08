@@ -1,4 +1,5 @@
-//Apr 6 updated, utlized same logic of code from cherrbloosm and makes the snow melting by the time frames.
+//Apr 6 updated, utlized same logic of code from cherrbloosm and makes the snow melting by the timeframes.
+//Apr 4 updated, removed the key pressed to be the switch and set the time frame to let the scenes transition by the time
 
 
 
@@ -330,7 +331,7 @@ function Drawcherryblossm() {
         
         
        stars.forEach(star => {
-        star.updateStar(); // Update the star's properties for twinkling
+        star.updateStar(); // update the star's properties for twinkling
         star.display(); // draw the star with its current properties
     });
       // end of stars
@@ -389,8 +390,7 @@ class DrawFlower {
         translate(this.x, this.y); 
         scale(this.size); 
 
-        // reset positions since we've translated to (this.x, this.y) and scaled
-        fill(this.c);
+        
         ellipse(0, 0, 30, 30);
        pop();
       
@@ -554,9 +554,9 @@ class DrawSnow {
     this.x = x;
     this.y = y;
     this.c = c;
-    this.size = 10; // Initial scale of snow
+    this.size = 10; // initial scale of snow
     this.frameCounter = 0;
-    this.melting = 400; // Time, frames to wait before start the animation.
+    this.melting = 400; // time, frames to wait before start the animation.
   }
   
   display() {
